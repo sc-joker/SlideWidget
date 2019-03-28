@@ -13,11 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-		MainWindow.cpp
+		MainWindow.cpp \
+    SlideWidget.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += MainWindow.h \
+    SlideWidget.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    SlideWidget.ui
 
 RESOURCES += \
     pictures.qrc

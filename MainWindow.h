@@ -31,6 +31,8 @@ public slots:
 
 	void					movePicture();
 
+	void					delPicture();
+
 private:
 	Ui::MainWindow *ui;
 

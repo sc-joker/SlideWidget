@@ -1,5 +1,8 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#ifdef ARM
+#include <QWSServer>
+#endif
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -16,29 +19,37 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #ifdef ARM
 	this->setWindowFlags(Qt::FramelessWindowHint);      //设置窗口标志为无边框
+	QWSServer::setCursorVisible(false);			//去掉鼠标
 #endif
 
 	for (int i = 0; i < 3; i ++)
 	{
-		/*
-		QString path = QString(":/pictures/%1.png").arg(i+1);
-		qDebug() << "path: " << path;
-		QImage *image = new QImage(path);
-		m_imageList.append(image);
-		*/
-
 		QLabel *label = new QLabel(ui->pictureWidget);
 		m_imageLabel->setGeometry(0, 0, 420, 300);
 		QImage image(QString(":/pictures/%1.png").arg(i + 1));
 		label->setPixmap(QPixmap::fromImage(image));
 
-		m_labelList.append(label);
+		ui->pictureWidget->appendWidget(label);
 	}
 
-	showPicture(m_labelList.first());
+	for (int i = 0; i < 3; i ++)
+	{
+		QWidget *w = new QWidget;
+		QLabel *label = new QLabel(w);
+		label->setGeometry(50, 50, 50, 50);
+		label->setText(QString::number(i + 1));
 
-	connect(ui->leftButton, SIGNAL(clicked(bool)), this, SLOT(prev()));
-	connect(ui->rigthButton, SIGNAL(clicked(bool)), this, SLOT(next()));
+		ui->pictureWidget->appendWidget(w);
+	}
+
+	connect(ui->leftButton, SIGNAL(clicked(bool)), ui->pictureWidget, SLOT(showPrevWidget()));
+	connect(ui->rigthButton, SIGNAL(clicked(bool)), ui->pictureWidget, SLOT(showNextWidget()));
+
+//	connect(ui->delButton, SIGNAL(clicked(bool)), this, SLOT(delPicture()));
+//	showPicture(m_labelList.first());
+
+//	connect(ui->leftButton, SIGNAL(clicked(bool)), this, SLOT(prev()));
+//	connect(ui->rigthButton, SIGNAL(clicked(bool)), this, SLOT(next()));
 
 	connect(&m_timer, SIGNAL(timeout()), this, SLOT(movePicture()));
 }
@@ -130,4 +141,9 @@ void MainWindow::movePicture()
 			m_flag = false;
 		}
 	}
+}
+
+void MainWindow::delPicture()
+{
+	ui->pictureWidget->removeWidget(3);
 }

@@ -43,7 +43,7 @@
      <string>&gt;</string>
     </property>
    </widget>
-   <widget class="QWidget" name="pictureWidget" native="true">
+   <widget class="SlideWidget" name="pictureWidget" native="true">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -56,6 +56,14 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>SlideWidget</class>
+   <extends>QWidget</extends>
+   <header>SlideWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
